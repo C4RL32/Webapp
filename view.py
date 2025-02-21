@@ -32,6 +32,17 @@ st.title("Bienvenido a tu Gestor de Tareas 📝")
 if "tareas" not in st.session_state:
     st.session_state.tareas = []
 
+# Función para eliminar una tarea
+def eliminar_tarea(index):
+    """Elimina una tarea de la lista."""
+    st.session_state.tareas.pop(index)
+    st.success("Tarea eliminada correctamente!")
+
+# Función para marcar una tarea como completada
+def marcar_como_completada(index):
+    """Marca una tarea como completada o pendiente."""
+    st.session_state.tareas[index]["completada"] = not st.session_state.tareas[index]["completada"]
+
 # Input para agregar una nueva tarea
 nueva_tarea = st.text_input("Agrega una nueva tarea:")
 
@@ -64,7 +75,7 @@ for i, tarea in enumerate(st.session_state.tareas):
         # Botón para eliminar la tarea
         if st.button("❌", key=f"eliminar_{i}"):
             eliminar_tarea(i)
-            st.experimental_rerun()  # Recargar la aplicación para actualizar la lista
+            st.rerun()  # Recargar la aplicación para actualizar la lista
 
 # Footer de la aplicación
 st.markdown(
@@ -85,13 +96,3 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
-# Funciones para manejar la lógica de la aplicación
-def marcar_como_completada(index):
-    """Marca una tarea como completada o pendiente."""
-    st.session_state.tareas[index]["completada"] = not st.session_state.tareas[index]["completada"]
-
-def eliminar_tarea(index):
-    """Elimina una tarea de la lista."""
-    st.session_state.tareas.pop(index)
-    st.success("Tarea eliminada correctamente!")
